@@ -1,0 +1,24 @@
+.page-container header {
+    padding: 1em 0;
+}
+
+.page-container .page-actions > * {
+    margin-left: 0.5em;
+}
+
+.page-container .page-head {
+    border-bottom: 1px solid #d1d8dd;
+}
+
+.page-container .page-body {
+    padding-top: 1em;
+}
+
+.page-container aside {
+    border-right: 1px solid #d1d8dd;
+}
+
+.page-container main {
+    padding-left: 1em;
+    padding-right: 1em;
+}
