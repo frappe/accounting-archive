@@ -43,10 +43,13 @@ export default class Database {
         }
     }
 
-    sql(query, params) {
+    sql(query, opts={}) {
         const result = frappe.db._conn.exec(query);
         if (result.length > 0) {
-            return sql_result_to_obj(result[0]);
+            if (opts.as_list)
+                return result[0];
+            else
+                return sql_result_to_obj(result[0]);
         }
         return null;
     }

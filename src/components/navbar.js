@@ -26,7 +26,12 @@ export default class Navbar extends Component {
                     <div class="navbar-menu">
                         <div class="navbar-end">
                             <a class="navbar-item">
-                                Home
+                                <div class="level">
+                                    <div class="level-left">
+                                        <p class="level-item"><img src="https://avatars3.githubusercontent.com/u/9355208?s=460&v=4" width="30"></p>
+                                        <h5 class="level-item">Faris Ansari</h5>
+                                    </div>
+                                </div>
                             </a>
                         </div>
                     </div>

@@ -7,10 +7,8 @@ export default class Page extends Component {
     get defaultState() {
         return {
             title: 'Page',
-            primary_action_label: 'Primary',
-            primary_action: () => {},
-            secondary_action_label: 'Secondary',
-            secondary_action: () => {},
+            primary_action: null, // { label, action }
+            secondary_action: null, // { label, action }
             menu_items: [
                 // { label, action }
             ],
@@ -25,20 +23,20 @@ export default class Page extends Component {
     }
 
     get_primary_button() {
-        if (this.state.primary_action && this.state.primary_action_label) {
+        if (this.state.primary_action) {
             return new Button({
-                label: this.state.primary_action_label,
-                action: this.state.primary_action,
+                label: this.state.primary_action.label,
+                action: this.state.primary_action.action,
                 is_primary: true
             });
         }
     }
 
     get_secondary_button() {
-        if (this.state.secondary_action && this.state.secondary_action_label) {
+        if (this.state.secondary_action) {
             return  new Button({
-                label: this.state.secondary_action_label,
-                action: this.state.secondary_action
+                label: this.state.secondary_action.label,
+                action: this.state.secondary_action.action
             });
         }
     }
@@ -71,6 +69,24 @@ export default class Page extends Component {
         `;
     }
 
+    get_main_section() {
+        if (!this.state.main_section) return;
+        return this.html`
+            <main class="column">
+                ${this.state.main_section}
+            </aside>
+        `;
+    }
+
+    get_side_section() {
+        if (!this.state.side_section) return;
+        return this.html`
+            <aside class="menu column is-one-fifth">
+                ${this.state.side_section}
+            </aside>
+        `;
+    }
+
     render() {
         return this.html`
             <section class="page-container" data-page-container>
@@ -97,12 +113,8 @@ export default class Page extends Component {
                 <div class="page-body">
                     <div class="container">
                         <div class="columns">
-                            <aside class="menu column is-one-fifth">
-                                ${this.state.side_section}
-                            </aside>
-                            <main class="column">
-                                ${this.state.main_section}
-                            </main>
+                            ${this.get_side_section()}
+                            ${this.get_main_section()}
                         </div>
                     </div>
                 </div>
