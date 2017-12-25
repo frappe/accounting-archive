@@ -4,8 +4,9 @@ import SQL from 'sql.js';
 
 import frappe from './frappe';
 
-export default class Database {
-    init() {
+class Database {
+
+    constructor() {
         let db = this.open() || this.create_db();
         this._conn = db;
     }
@@ -83,3 +84,5 @@ function sql_result_to_obj(result) {
         }, {});
     })
 }
+
+export default new Database;

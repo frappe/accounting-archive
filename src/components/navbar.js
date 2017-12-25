@@ -1,6 +1,6 @@
 import { Component } from 'hyperhtml';
 
-export default class Navbar extends Component {
+class Navbar extends Component {
     get defaultState() {
         return {
 
@@ -10,17 +10,17 @@ export default class Navbar extends Component {
     constructor() {
         super();
         // add helper class for fixed navbar
-        document.querySelector('html')
-            .classList.add('has-navbar-fixed-top');
+        // document.querySelector('html')
+        //     .classList.add('has-navbar-fixed-top');
     }
 
     render() {
         return this.html`
-            <nav class="navbar is-fixed-top is-light" role="navigation" aria-label="main navigation">
+            <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
                 <div class="container">
                     <div class="navbar-brand">
                         <a class="navbar-item">
-                            <img src="https://erpnext.com/assets/frappe_theme/img/erp-icon.svg" width="30">
+                            <h1>Frappé Accounting</h1>
                         </a>
                     </div>
                     <div class="navbar-menu">
@@ -40,3 +40,5 @@ export default class Navbar extends Component {
         `;
     }
 }
+
+export default new Navbar;

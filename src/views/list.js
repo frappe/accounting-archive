@@ -2,23 +2,13 @@ import './list.css';
 import { Component, wire } from 'hyperhtml';
 import Page from '../components/page';
 
-export default class ListView extends Component {
+export default class ListView extends Page {
     get defaultState() {
-        return {
+        const state = super.defaultState;
+        return Object.assign(state, {
             title: 'List',
-            data: {
-                columns: [],
-                rows: []
-            }
-        }
-    }
-
-    constructor(opts) {
-        super();
-        this.page = new Page();
-        this.setState(opts);
-        this.page.setState({
-            title: this.state.title,
+            columns: [],
+            rows: [],
             primary_action: {
                 label: 'New',
                 action: console.log
@@ -26,9 +16,15 @@ export default class ListView extends Component {
             secondary_action: {
                 label: 'Refresh',
                 action: console.log
-            },
-            main_section: this.list_template(),
-            side_section: this.sidebar_template()
+            }
+        });
+    }
+
+    constructor(opts) {
+        super();
+        this.setState(opts);
+        this.setState({
+            main_section: this.list_template()
         });
     }
 
@@ -104,7 +100,7 @@ export default class ListView extends Component {
     }
 
     get_list_head() {
-        const columns = this.state.data.columns.map(c => ({title: c}));
+        const columns = this.state.columns.map(c => ({title: c}));
         return this.html`
             <thead>
                 <tr>
@@ -125,7 +121,7 @@ export default class ListView extends Component {
     }
 
     get_list_body() {
-        const rows = this.state.data.rows.map(
+        const rows = this.state.rows.map(
             r => r.map(c => ({title: c}))
         );
 
@@ -154,10 +150,6 @@ export default class ListView extends Component {
                 <li><a>Calendar</a></li>
             </ul>
         `;
-    }
-
-    render() {
-        return this.page.render();
     }
 }
 

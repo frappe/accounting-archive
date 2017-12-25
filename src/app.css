@@ -1,0 +1,22 @@
+.app-container {
+    display: flex;
+}
+
+aside {
+    flex: 1;
+    border-right: 1px solid #d1d8dd;
+}
+
+aside .menu-list a {
+    border-radius: 0;
+}
+
+main {
+    flex: 5;
+    padding: 0.75em;
+}
+
+.navbar .container {
+    max-width: 100%;
+    padding: 0 0.75em;
+}

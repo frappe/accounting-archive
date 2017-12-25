@@ -91,16 +91,16 @@ export default class Page extends Component {
         return this.html`
             <section class="page-container" data-page-container>
                 <header class="page-head">
-                    <div class="container">
-                        <nav class="navbar">
-                            <div class="navbar-brand">
-                                <div class="navbar-item page-title">
+                    <div class="">
+                        <nav class="level">
+                            <div class="level-left">
+                                <div class="page-title">
                                     <h1 class="title">${this.state.title}</h1>
                                 </div>
                             </div>
-                            <div class="navbar-menu">
-                                <div class="navbar-end">
-                                    <div class="navbar-item page-actions">
+                            <div class="level-right">
+                                <div class="">
+                                    <div class=" page-actions">
                                         ${this.get_menu_dropdown()}
                                         ${this.get_secondary_button()}
                                         ${this.get_primary_button()}
@@ -111,9 +111,8 @@ export default class Page extends Component {
                     </div>
                 </header>
                 <div class="page-body">
-                    <div class="container">
+                    <div class="">
                         <div class="columns">
-                            ${this.get_side_section()}
                             ${this.get_main_section()}
                         </div>
                     </div>

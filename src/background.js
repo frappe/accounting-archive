@@ -5,7 +5,7 @@
 
 import path from "path";
 import url from "url";
-import { app, Menu } from "electron";
+import { app, Menu, BrowserWindow } from "electron";
 import { devMenuTemplate } from "./helpers/menu/dev_menu_template";
 import { editMenuTemplate } from "./helpers/menu/edit_menu_template";
 import createWindow from "./helpers/window";
@@ -33,8 +33,8 @@ if (env.name !== "production") {
 app.on("ready", () => {
   setApplicationMenu();
 
-  const mainWindow = createWindow("main", {
-    width: 1440,
+  const mainWindow = new BrowserWindow({
+    width: 1024,
     height: 768
   });
 

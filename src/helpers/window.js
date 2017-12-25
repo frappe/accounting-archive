@@ -24,8 +24,7 @@ export default (name, options) => {
       // For some reason json can't be read (might be corrupted).
       // No worries, we have defaults.
     }
-    console.log(defaultSize, restoredState);
-    return Object.assign({}, defaultSize);
+    return Object.assign({}, defaultSize, restoredState);
   };
 
   const getCurrentPosition = () => {
