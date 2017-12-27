@@ -1,0 +1,6 @@
+{
+	"apps": [
+		"frappe-electron",
+		"accounting"
+	]
+}

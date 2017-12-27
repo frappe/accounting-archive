@@ -1,8 +1,7 @@
 import '../node_modules/bulma/css/bulma.css';
 import hyperhtml, { Component } from 'hyperhtml';
 
-import frappe from './frappe';
-import Database from './database';
+import frappe from '../frappe-electron/frappe';
 
 import Navbar from './components/navbar';
 import Sidebar from './components/sidebar';
@@ -14,6 +13,8 @@ import FormView from './views/form';
 import Dashboard from './views/dashboard';
 
 import './app.css';
+
+import process from 'process';
 
 export default class App extends Component {
     get defaultState() {
