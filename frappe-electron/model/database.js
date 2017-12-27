@@ -111,21 +111,6 @@ const type_map = {
 	,'Geolocation':	'text'
 }
 
-frappe.db = new Database();
-
-// helpers
-
-const SCHEMA = `
-	CREATE TABLE "ToDo" (
-		"name" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-		"subject" TEXT(255,0) NOT NULL,
-		"description" TEXT(255,0) NOT NULL
-	);
-	INSERT INTO ToDo VALUES
-		(NULL, "Buy Eggs", "Need 50 eggs for the next week"),
-		(NULL, "Haircut", "Get a haircut");
-`;
-
 function sql_result_to_obj(result) {
 	const columns = result.columns;
 	return result.values.map(row => {
@@ -136,4 +121,4 @@ function sql_result_to_obj(result) {
 	})
 }
 
-export default new Database;
+export default Database;
