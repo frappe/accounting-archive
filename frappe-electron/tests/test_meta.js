@@ -14,6 +14,8 @@ describe('Meta', () => {
 	it('should get fields from meta', () => {
 		let todo = frappe.get_meta('ToDo');
 		let fields = todo.fields.map((df) => df.fieldname);
+		assert.ok(fields.includes('subject'));
 		assert.ok(fields.includes('description'));
+		assert.ok(fields.includes('status'));
 	});
 });

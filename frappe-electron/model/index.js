@@ -15,13 +15,13 @@ export const standard_fields = [
 		fieldname: 'modified', fieldtype: 'Datetime', reqd: 1
 	},
 	{
-		fieldname: 'docstatus', fieldtype: 'Integer', reqd: 1, default: 0
+		fieldname: 'docstatus', fieldtype: 'Int', reqd: 1, default: 0
 	},
 ];
 
 export const child_fields = [
 	{
-		fieldname: 'idx', fieldtype: 'Integer', reqd: 1
+		fieldname: 'idx', fieldtype: 'Int', reqd: 1
 	},
 	{
 		fieldname: 'parent', fieldtype: 'Data', reqd: 1
@@ -36,3 +36,31 @@ export const child_fields = [
 
 export const no_value_fields = ['Section Break', 'Column Break', 'HTML',
 	'Table', 'Button', 'Image', 'Fold', 'Heading'];
+
+export const type_map = {
+	'Currency':		'real'
+	,'Int':			'integer'
+	,'Float':		'real'
+	,'Percent':		'real'
+	,'Check':		'integer'
+	,'Small Text':	'text'
+	,'Long Text':	'text'
+	,'Code':		'text'
+	,'Text Editor':	'text'
+	,'Date':		'text'
+	,'Datetime':	'text'
+	,'Time':		'text'
+	,'Text':		'text'
+	,'Data':		'text'
+	,'Link':		'text'
+	,'Dynamic Link':'text'
+	,'Password':	'text'
+	,'Select':		'text'
+	,'Read Only':	'text'
+	,'Attach':		'text'
+	,'Attach Image':'text'
+	,'Signature':	'text'
+	,'Color':		'text'
+	,'Barcode':		'text'
+	,'Geolocation':	'text'
+}

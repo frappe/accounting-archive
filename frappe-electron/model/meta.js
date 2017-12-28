@@ -1,4 +1,4 @@
-import Document from './document';
+import { Document } from './document';
 
 export class Meta extends Document {
 	constructor(data) {
@@ -21,6 +21,44 @@ export class Meta extends Document {
 			this.event_handlers[key] = [];
 		}
 		this.event_handlers[key].push(fn);
+	}
+
+	get_valid_fields() {
+		if (!this._valid_fields) {
+			this._valid_fields = [];
+
+			// standard fields
+			for (let df of frappe.model.standard_fields) {
+				this._valid_fields.push(df);
+			}
+
+			// parent fields
+			if (this.istable) {
+				for (let df of frappe.model.child_fields) {
+					this._valid_fields.push(df);
+				}
+			}
+
+			// doctype fields
+			for (let df of this.fields) {
+				if (frappe.model.type_map[df.fieldtype]) {
+					this._valid_fields.push(df);
+				}
+			}
+		}
+
+		return this._valid_fields;
+	}
+
+	validate_select(df, value) {
+		let options = df.options;
+		if (typeof options === 'string') {
+			// values given as string
+			options = df.options.split('\n');
+		}
+		if (!options.includes(value)) {
+			throw new frappe.ValueError(`${value} must be one of ${options.join(", ")}`);
+		}
 	}
 
 	trigger(key) {

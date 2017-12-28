@@ -1,6 +1,5 @@
 import walk from 'walk';
 import path from 'path';
-import { slug } from './utils';
 import frappe from '../frappe';
 import process from 'process';
 
@@ -15,7 +14,9 @@ export class Models {
 			this.data[doctype] = {};
 		}
 		if (!this.data[doctype][name]) {
-			this.data[doctype][name] = require(this.path_map[slug(doctype)][slug(name)]);
+			console.log(frappe.utils.slug(doctype), frappe.utils.slug(name));
+			this.data[doctype][name] = require(
+				this.path_map[frappe.utils.slug(doctype)][frappe.utils.slug(name)]);
 		}
 		return this.data[doctype][name];
 	}
@@ -41,7 +42,7 @@ export class Models {
 						next();
 					}
 				}
-			})
+			});
 		}
 	}
 }

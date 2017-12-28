@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import SQL from 'sql.js';
-import { slug, sqlescape } from './utils';
 
 import frappe from '../frappe';
 
@@ -46,32 +45,32 @@ export class Database {
 	}
 
 	create_table(doctype) {
-		let model = require('./index');
 		let meta = frappe.get_meta(doctype);
 		let columns = [];
 
 		// add standard fields
-		let fields = model.standard_fields;
+		let fields = frappe.model.standard_fields;
 		if (meta.istable) {
-			fields.concat(model.child_fields);
+			fields = fields.concat(model.child_fields);
 		}
 
 		// add model fields
-		fields.concat(meta.fields);
+		fields = fields.concat(meta.fields);
 
 		for (let df of fields) {
-			if (type_map[df.fieldtype]) {
-				columns.push(`${df.fieldname} ${type_map[df.fieldtype]} ${df.reqd ? "not null" : ""} ${df.default ? ("default '" + sqlescape(df.default) + "'") : ""}`)
+			if (frappe.model.type_map[df.fieldtype]) {
+				columns.push(`${df.fieldname} ${frappe.model.type_map[df.fieldtype]} ${df.reqd ? "not null" : ""} ${df.default ? ("default " + frappe.utils.sqlescape(df.default)) : ""}`);
 			}
 		}
 
-		const query = `CREATE TABLE ${slug(doctype)} (
+		const query = `CREATE TABLE IF NOT EXISTS ${frappe.utils.slug(doctype)} (
 			${columns.join(", ")})`;
 
 		return this.sql(query);
 	}
 
 	sql(query, opts={}) {
+		//console.log(query);
 		const result = frappe.db._conn.exec(query);
 		if (result.length > 0) {
 			if (opts.as_list)
@@ -81,34 +80,6 @@ export class Database {
 		}
 		return null;
 	}
-}
-
-const type_map = {
-	'Currency':		'real'
-	,'Int':			'integer'
-	,'Float':		'real'
-	,'Percent':		'real'
-	,'Check':		'integer'
-	,'Small Text':	'text'
-	,'Long Text':	'text'
-	,'Code':		'text'
-	,'Text Editor':	'text'
-	,'Date':		'text'
-	,'Datetime':	'text'
-	,'Time':		'text'
-	,'Text':		'text'
-	,'Data':		'text'
-	,'Link':		'text'
-	,'Dynamic Link':'text'
-	,'Password':	'text'
-	,'Select':		'text'
-	,'Read Only':	'text'
-	,'Attach':		'text'
-	,'Attach Image':'text'
-	,'Signature':	'text'
-	,'Color':		'text'
-	,'Barcode':		'text'
-	,'Geolocation':	'text'
 }
 
 function sql_result_to_obj(result) {

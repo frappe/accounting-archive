@@ -6,8 +6,8 @@ describe('Document', () => {
 		frappe.init();
 	});
 
-	it('should create a table', () => {
-		frappe.db.create_table('ToDo');
-		frappe.db.write();
-	});
+	// it('should create a table', () => {
+	// 	frappe.db.create_table('ToDo');
+	// 	frappe.db.write();
+	// });
 });
