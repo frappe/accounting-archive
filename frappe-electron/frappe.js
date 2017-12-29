@@ -26,11 +26,12 @@ Object.assign(frappe, {
 	},
 	init_libs() {
 		this.utils = require('./utils');
+		Object.assign(this, this.utils);
 		let models = require('./model/models');
 		this.models = new models.Models();
 		this.model = require('./model');
-		this.meta = require('./model/meta');
 		this.document = require('./model/document');
+		this.meta = require('./model/meta');
 		this.session_lib = require('./session');
 	},
 	init_db() {
@@ -45,10 +46,12 @@ Object.assign(frappe, {
 	},
 	get_doc(data, name) {
 		if (typeof data==='string' && typeof name==='string') {
-			var doc = new this.document.Document({doctype:data, name: name});
+			let controller_class = this.models.get_controller(data);
+			var doc = new controller_class({doctype:data, name: name});
 			doc.load();
 		} else {
-			var doc = new this.document.Document(data);
+			let controller_class = this.models.get_controller(data.doctype);
+			var doc = new controller_class(data);
 		}
 		return doc;
 	},

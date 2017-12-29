@@ -19,6 +19,17 @@ describe('Document', () => {
 		assert.equal(doc1.description, doc2.description);
 	});
 
+	it('should update a doc', () => {
+		let doc = test_doc().insert();
+
+		assert.notEqual(frappe.db.get_value(doc.doctype, doc.name, 'subject'), 'subject 2');
+
+		doc.subject = 'subject 2'
+		doc.update();
+
+		assert.equal(frappe.db.get_value(doc.doctype, doc.name, 'subject'), 'subject 2');
+	})
+
 	it('should get a value', () => {
 		assert.equal(test_doc().get('subject'), 'testing 1');
 	});
@@ -45,6 +56,7 @@ const test_doc = () => {
 	return frappe.get_doc({
 		doctype: 'ToDo',
 		status: 'Open',
-		subject: 'testing 1'
+		subject: 'testing 1',
+		description: 'test description 1'
 	});
 }

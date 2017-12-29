@@ -51,8 +51,12 @@ export class Document {
 		}
 	}
 
-	validate() {
-	}
+	validate() { }
+	before_insert() { }
+	after_insert() { }
+	before_update() { }
+	after_update() { }
+	after_save() { }
 
 	get_valid_dict() {
 		let doc = {};
@@ -76,26 +80,37 @@ export class Document {
 	}
 
 	load() {
-		let doc = frappe.db.sql(`select * from ${frappe.utils.slug(this.doctype)} where name = ${frappe.utils.sqlescape(this.name)}`);
+		let doc = frappe.db.sql(`select * from ${frappe.slug(this.doctype)} where name = ${frappe.db.escape(this.name)}`);
 		Object.assign(this, doc[0]);
+		return this;
 	}
 
 	insert() {
 		this.set_name();
 		this.set_standard_values();
+		this.validate();
+		this.before_insert();
 		let doc = this.get_valid_dict();
-		frappe.db.sql(`insert into ${frappe.utils.slug(this.doctype)}
+		frappe.db.sql(`insert into ${frappe.slug(this.doctype)}
 			(${Object.keys(doc).join(", ")})
-			values (${Object.values(doc).map(d => frappe.utils.sqlescape(d)).join(", ")})`);
+			values (${Object.values(doc).map(d => frappe.db.escape(d)).join(", ")})`);
+		this.after_insert();
+		this.after_save();
+		return this;
 	}
 
 	update() {
 		this.set_standard_values();
+		this.validate();
+		this.before_insert();
 		let assigns = [];
-		for (let key of this.meta.get_valid_keys()) {
-			assigns.push(`${key} = ${frappe.utils.sqlescape(this.get(key))}`);
+		for (let df of this.meta.get_valid_fields()) {
+			assigns.push(`${df.fieldname} = ${frappe.db.escape(this.get(df.fieldname))}`);
 		}
-		frappe.db.sql(`update ${frappe.utils.slug(this.doctype)}
+		frappe.db.sql(`update ${frappe.slug(this.doctype)}
 			set ${assigns.join(", ")}`);
+		this.after_update();
+		this.after_save();
+		return this;
 	}
 };

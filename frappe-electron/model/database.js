@@ -49,7 +49,7 @@ export class Database {
 		let columns = [];
 
 		// add standard fields
-		let fields = frappe.model.standard_fields;
+		let fields = frappe.model.standard_fields.slice();
 		if (meta.istable) {
 			fields = fields.concat(model.child_fields);
 		}
@@ -63,7 +63,7 @@ export class Database {
 			}
 		}
 
-		const query = `CREATE TABLE IF NOT EXISTS ${frappe.utils.slug(doctype)} (
+		const query = `CREATE TABLE IF NOT EXISTS ${frappe.slug(doctype)} (
 			${columns.join(", ")})`;
 
 		return this.sql(query);
@@ -79,6 +79,16 @@ export class Database {
 				return sql_result_to_obj(result[0]);
 		}
 		return null;
+	}
+
+	get_value(doctype, name, fieldname='name') {
+		let value = this.sql(`select ${fieldname} from ${frappe.slug(doctype)}
+			where name=${this.escape(name)}`);
+		return value.length ? value[0][fieldname] : null;
+	}
+
+	escape(value) {
+		return frappe.utils.sqlescape(value);
 	}
 }
 

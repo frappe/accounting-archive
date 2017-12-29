@@ -12,7 +12,8 @@ module.exports = env => {
     externals: [nodeExternals()],
     resolve: {
       alias: {
-        env: path.resolve(__dirname, `../config/env_${env}.json`)
+        env: path.resolve(__dirname, `../config/env_${env}.json`),
+        frappe: path.resolve(__dirname, '../frappe-electron/frappe.js')
       }
     },
     devtool: "source-map",

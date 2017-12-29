@@ -34,9 +34,6 @@ export const child_fields = [
 	}
 ];
 
-export const no_value_fields = ['Section Break', 'Column Break', 'HTML',
-	'Table', 'Button', 'Image', 'Fold', 'Heading'];
-
 export const type_map = {
 	'Currency':		'real'
 	,'Int':			'integer'
